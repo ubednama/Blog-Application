@@ -3,10 +3,8 @@ import React from "react";
 const ContentPage = ({ title, content }) => {
   return (
     <div className="p-4 bg-white rounded-2xl shadow">
-      <h1 className="text-2xl font-bold mb-4 text-[#1E2026]">
-        {title}
-      </h1>
-      <div className="space-y-4 text-[#3D404B]">
+      <h1 className="text-2xl font-bold mb-4 text-[#1E2026]">{title}</h1>
+      <div className="text-[#3D404B]">
         {content.map((item, index) => (
           <div key={index}>
             {item.type === "text" && <div>{item.data}</div>}
@@ -15,8 +13,8 @@ const ContentPage = ({ title, content }) => {
                 <img
                   src={item.imageUrl}
                   alt={item.data}
-                  className="w-full h-auto rounded"
-                  />
+                  className="w-full h-auto rounded my-4"
+                />
               </div>
             )}
             {item.type === "video" && (
@@ -26,7 +24,10 @@ const ContentPage = ({ title, content }) => {
               </video>
             )}
             {item.type === "link" && (
-              <a href={item.url} className="text-blue-500 underline">
+              <a
+                href={item.url}
+                className="text-blue-500 underline"
+              >
                 {item.linkText}
               </a>
             )}
