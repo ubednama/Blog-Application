@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { fileURLToPath } from 'url';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import routes from './server/routes/index.js';
 import dbConnection from './server/configs/db.connection.js';
 
@@ -9,10 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const corsOption = {
-    origin: "http://localhost:5173"
+    origin: "https://blog-application-rauc.onrender.com",
+    // origin: "http://localhost:5173"
 }
 
-app.use(cors());
+app.use(cors(corsOption));
 app.use(express.json());
 
 app.get('/api', (req, res) => {
@@ -31,12 +32,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong!' });
 });
-
 
 app.listen(PORT, () => {
     dbConnection();

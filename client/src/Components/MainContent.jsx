@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import PacmanLoader from "react-spinners/PacmanLoader";
 import ContentPage from "./ContentPage";
 
 const MainContent = ({ isSidebarVisible }) => {
@@ -19,7 +20,13 @@ const MainContent = ({ isSidebarVisible }) => {
   }, []);
 
   if (posts.length === 0) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex mt-4 justify-center h-full w-full">
+        <div>
+          <PacmanLoader color="#6947BF" />
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -47,8 +54,8 @@ const MainContent = ({ isSidebarVisible }) => {
             </span>
           </div>
 
-          <div className="relative left-1/2 -translate-x-1/2 w-[125%]">
-            <div className="border border-[#D6DFE4] p-4 rounded-2xl h-[70vh] w-full flex items-center justify-center">
+          <div className="relative left-1/2 -translate-x-1/2 w-[120%] aspect-w-2 aspect-h-1">
+            <div className="border border-[#D6DFE4] p-4 rounded-2xl w-full  flex items-center justify-center">
               <h2 className="text-4xl font-bold text-[#C1CCD6]">
                 Title Image Placeholder
               </h2>
