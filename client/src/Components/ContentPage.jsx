@@ -11,11 +11,13 @@ const ContentPage = ({ title, content }) => {
           <div key={index}>
             {item.type === "text" && <div>{item.data}</div>}
             {item.type === "image" && (
-              <img
-                src={item.imageUrl}
-                alt={item.data}
-                className="w-full h-auto rounded"
-              />
+              <div className="px-20">
+                <img
+                  src={item.imageUrl}
+                  alt={item.data}
+                  className="w-full h-auto rounded"
+                  />
+              </div>
             )}
             {item.type === "video" && (
               <video controls className="w-full h-auto rounded">
