@@ -9,10 +9,10 @@ const ContentPage = ({ title, content }) => {
           <div key={index}>
             {item.type === "text" && <div>{item.data}</div>}
             {item.type === "image" && (
-              <div className="px-20">
+              <div className="px-20 min-h-40 border rounded-xl">
                 <img
                   src={item.imageUrl}
-                  alt={item.data}
+                  alt={item.data || "Image"}
                   className="w-full h-auto rounded my-4"
                 />
               </div>

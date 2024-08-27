@@ -1,8 +1,10 @@
 import Post from "../models/post.model.js";
+import slugify from 'slugify';
 
 export const getPosts = async (req, res) => {
+    console.log("fetching posts")
     try {
-        const posts = await Post.find().sort({ createdAt: -1 });
+        const posts = await Post.find({}, 'title duration featuredImage excerpt tags slug updatedAt');
         res.json(posts);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -10,8 +12,10 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPost = async (req, res) => {
+    const {slug} = req.params;
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findOne({slug:slug})
+            .populate('author', 'name');
         if (!post) return res.status(404).json({ message: 'Post not found' });
         res.json(post);
     } catch (error) {
@@ -20,17 +24,31 @@ export const getPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-    const { title, content, excerpt, featuredImage } = req.body;
+    const { title, sections, excerpt, featuredImage, duration, tags } = req.body;
 
-    if (!title || !content || !excerpt) {
-        return res.status(400).json({ message: 'Title, content, and excerpt are required' });
+    const userId = req.userId;
+    console.log(userId)
+
+    if (!title || !sections ) {
+        return res.status(400).json({ message: 'Title and sections are required' });
+    }
+
+    const slug = slugify(title, { lower: true, strict: true });
+
+    const existingPost = await Post.findOne({ slug: slug });
+    if (existingPost) {
+        return res.status(400).json({ message: 'A post with this title already exists' });
     }
 
     const post = new Post({
         title,
-        content,
+        slug,
+        sections,
         excerpt,
-        featuredImage
+        featuredImage,
+        duration,
+        tags,
+        author: userId
     });
 
     try {
@@ -42,14 +60,20 @@ export const createPost = async (req, res) => {
 };
 
 export const updatePost = async (req, res) => {
-    const { title, content, excerpt, featuredImage } = req.body;
+    const { title, sections, excerpt, featuredImage } = req.body;
+    const userId = req.userId;
+    const { slug } = req.params;
 
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findOne({ slug: slug });
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
+        if (post.author.toString() !== userId) {
+            return res.status(403).json({ message: 'You are not authorized to update this post' });
+        }
+
         if (title) post.title = title;
-        if (content) post.content = content;
+        if (sections) post.sections = sections;
         if (excerpt) post.excerpt = excerpt;
         if (featuredImage) post.featuredImage = featuredImage;
 
@@ -61,11 +85,19 @@ export const updatePost = async (req, res) => {
 };
 
 export const deletePost = async (req, res) => {
+    const userId = req.userId;
+    const { slug } = req.params;
+
+    console.log(slug)
     try {
-        const post = await Post.findById(req.params.id);
+        const post = await Post.findOne({ slug: slug });
         if (!post) return res.status(404).json({ message: 'Post not found' });
 
-        await post.remove();
+        if (post.author.toString() !== userId) {
+            return res.status(403).json({ message: 'You are not authorized to delete this post' });
+        }
+
+        await Post.findByIdAndDelete(post._id);
         res.json({ message: 'Post deleted' });
     } catch (error) {
         res.status(500).json({ message: error.message });

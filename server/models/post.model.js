@@ -1,46 +1,62 @@
 import mongoose from 'mongoose';
 
+const contentSchema = new mongoose.Schema({
+        type: {
+            type: String,
+            enum: ['text', 'image', 'video', 'link'],
+            required: true
+        }, data: {
+            type: String,
+            trim: true
+        }, url: {
+            type: String,
+            trim: true
+        }, linkText: {
+            type: String,
+            trim: true
+        }, imageUrl: {
+            type: String,
+            trim: true
+        }, paragraphs: [{
+            type: String,
+            trim: true
+        }]
+    },{_id: false});
+
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
         trim: true
-    },
-    content: [{
-        type: {
+    }, slug: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    }, sections: [{
+        sectionTitle: {
             type: String,
-            enum: ['text', 'image', 'video', 'link'],
-            required: true
-        },
-        data: {
-            type: String,
+            required: true,
             trim: true
         },
-        url: {
-            type: String,
-            trim: true
-        },
-        linkText: {
-            type: String,
-            trim: true
-        },
-        imageUrl: {
-            type: String,
-            trim: true
-        },
-        paragraphs: [{
-            type: String,
-            trim: true
-        }]
-    }],
-    excerpt: {
+        content: [contentSchema]
+    }], excerpt: {
         type: String,
         required: true,
         trim: true
-    },
-    featuredImage: {
+    }, featuredImage: {
         type: String,
         trim: true
+    }, duration: {
+        type: Number,
+        required: true
+    }, tags: [{
+        type: String,
+        trim: true
+    }], author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 }, { timestamps: true });
 
