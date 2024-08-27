@@ -4,12 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,35 +23,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install server dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Install client dependencies
-        working-directory: ./client
-        run: npm install
-
-      - name: Build frontend
-        working-directory: ./client
+      - name: Build
         run: npm run build
-
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: client/dist
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: client/dist
 
       - name: Trigger Deploy to Render
         env:
