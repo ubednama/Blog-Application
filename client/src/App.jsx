@@ -6,17 +6,20 @@ import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
 import MainContent from "./Components/Blog";
 import Home from "./Components/Home";
+import Auth from "./Components/Auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-    const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-    const toggleSidebar = () => {
-      setIsSidebarVisible(!isSidebarVisible);
-    };
-    
-  return (
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
+
+    return (
     <div className="flex flex-col h-screen overflow-hidden">
       <Header />
-      <div className="flex flex-1 relative overflow-hidden">
+      <div className="flex flex-1 overflow-hidden">
         {isSidebarVisible ? (
           <Sidebar isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
         ) : (
@@ -27,20 +30,31 @@ function App() {
             <FontAwesomeIcon icon={faCaretRight} />
           </button>
         )}
-        <div
-          className={`transition-all w-full p-3 duration-300 bg-[#E5ECF3] overflow-y-auto transition-border-radius ${
-            isSidebarVisible ? "rounded-tl-2xl" : "rounded-none"
-          }`}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/posts/:slug" element={<MainContent />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
+        <div className="flex-1 overflow-hidden">
+          <div
+            className={`h-full overflow-y-auto transition-all duration-300 bg-[#E5ECF3] ${
+              isSidebarVisible ? "rounded-tl-2xl" : ""
+            }`}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Auth />} />
+              <Route path="/signup" element={<Auth isSignup={true} />} />
+              <Route path="/posts/:slug" element={<MainContent />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={true}
+        closeOnClick
+        pauseOnFocusLoss
+      />
     </div>
-  );
+    );
 }
 
 export default App;
