@@ -23,7 +23,7 @@ const Auth = ({ isSignup = false }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        let response;
+      let response;
       if (isSignup) {
         response = await axiosInstance.post("/user/register", formData);
       } else {
@@ -60,7 +60,7 @@ const Auth = ({ isSignup = false }) => {
               type="text"
               value={formData.username}
               onChange={handleChange}
-              className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white"
+              className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white text-[#5B6170]"
             />
           </div>
           {isSignup && (
@@ -78,7 +78,7 @@ const Auth = ({ isSignup = false }) => {
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white"
+                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white text-[#5B6170]"
                 />
               </div>
               <div>
@@ -94,7 +94,7 @@ const Auth = ({ isSignup = false }) => {
                   type="text"
                   value={formData.title}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white"
+                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white text-[#5B6170]"
                 />
               </div>
 
@@ -111,7 +111,7 @@ const Auth = ({ isSignup = false }) => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white"
+                  className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white text-[#5B6170]"
                 />
               </div>
             </>
@@ -129,7 +129,7 @@ const Auth = ({ isSignup = false }) => {
               type="password"
               value={formData.password}
               onChange={handleChange}
-              className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white"
+              className="block w-full px-3 py-2 border border-[#C1CCD6] rounded-md shadow-sm focus:outline-none focus:ring-[#6947BF] focus:border-[#6947BF] sm:text-sm bg-white text-[#5B6170]"
             />
           </div>
           <button

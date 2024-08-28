@@ -12,23 +12,25 @@ import CloseIcon from "../assets/close.svg";
 import { toast } from "react-toastify";
 import { useAuth } from "../hooks/AuthContext";
 
-const SvgIcon = ({ src, alt, isSelected }) => {
+const SvgIcon = ({ src, alt, isSelected, isHovered }) => {
   return (
     <img
       src={src}
       alt={alt}
       className={`size-6 ${
-        isSelected ? "brightness-0 invert" : "brightness-0"
+        isSelected || isHovered ? "invert" : "brightness-0"
       }`}
     />
   );
 };
+
 
 const Sidebar = ({ isVisible, toggleSidebar }) => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
   useEffect(() => {
     const path = location.pathname;
@@ -83,33 +85,45 @@ const Sidebar = ({ isVisible, toggleSidebar }) => {
 
   return (
     <div
-      className={`w-20 p-4 transition-transform duration-300 flex flex-col justify-between items-center ${
+      className={`w-20 p-4 transition-transform duration-300 flex flex-col justify-between items-center relative z-50 ${
         isVisible ? "translate-x-0" : "-translate-x-full"
       } `}
     >
       <div className="flex gap-4 flex-col items-center">
-        {menuItems.map((item) => (
+        {menuItems.map((item, index) => (
           <div
             key={item.name}
-            className={`sidebar-item group ${
-              selectedItem === item.name
-                ? "bg-[#6947BF] rounded-2xl p-2"
-                : "p-2"
-            }`}
-            onClick={item.action}
+            onMouseEnter={() => setHoveredItem(item.name)}
+            onMouseLeave={() => setHoveredItem(null)}
           >
-            <SvgIcon
-              src={item.icon}
-              alt={item.name}
-              isSelected={selectedItem === item.name}
-            />
-            <span
-              className={`sidebar-item-title ${
-                selectedItem === item.name ? "text-white" : "text-black"
+            <div
+              className={`sidebar-item group ${
+                selectedItem === item.name
+                  ? "bg-[#6947BF] rounded-2xl p-2"
+                  : "p-2"
               }`}
+              onClick={item.action}
             >
-              {item.name}
-            </span>
+              <SvgIcon
+                src={item.icon}
+                alt={item.name}
+                isSelected={selectedItem === item.name}
+                isHovered={hoveredItem === item.name}
+              />
+
+              <span
+                className={`sidebar-item-title ${
+                  hoveredItem === item.name || selectedItem === item.name
+                    ? "text-white"
+                    : "text-black"
+                } ${selectedItem === item.name ? "hidden" : "block"}`}
+              >
+                {item.name}
+              </span>
+            </div>
+            {(index === 2 || index === 6) && (
+              <hr className="border-2 border-black mt-4" />
+            )}
           </div>
         ))}
       </div>

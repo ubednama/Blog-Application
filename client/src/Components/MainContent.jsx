@@ -42,7 +42,7 @@ const MainContent = ({ isSidebarVisible }) => {
 
   return (
     <div
-      className={`flex-1 p-1 sm:p-4 max-w-[100%] transition-all duration-300 bg-[#E5ECF3] overflow-y-auto transition-border-radius ${
+      className={`flex-1 p-1 sm:p-4 max-w-[100%] transition-all duration-300 bg-[#E5ECF3] text-[#5B6170] overflow-y-auto transition-border-radius ${
         isSidebarVisible ? "rounded-tl-2xl" : "rounded-none"
       }`}
     >
@@ -73,6 +73,9 @@ const MainContent = ({ isSidebarVisible }) => {
                 ))}
               </div>
               <h1 className="text-4xl font-bold">{posts.title}</h1>
+              <div className="text-xl bg-inherit w-full break-words">
+                {posts.excerpt}
+              </div>
               <div className="flex gap-14">
                 <span className="flex flex-col">
                   <div className="font-bold text-[#7A8196]">Author</div>

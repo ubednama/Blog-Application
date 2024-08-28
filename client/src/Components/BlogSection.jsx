@@ -25,7 +25,14 @@ const ContentPage = ({ title, content }) => {
             )}
             {item.type === "link" && (
               <a
-                href={item.url}
+                target="_blank"
+                href={
+                  !item.url.startsWith("http://") ||
+                  !item.url.startsWith("https://")
+                    ? "https://" + item.url
+                    : item.url
+                }
+                rel="noopener noreferrer"
                 className="text-blue-500 underline"
               >
                 {item.linkText}

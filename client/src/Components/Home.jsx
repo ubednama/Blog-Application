@@ -29,7 +29,7 @@ const Home = () => {
         fetchPosts();
       }, []);
   return (
-    <div className="flex justify-center w-full mt-10">
+    <div className="flex justify-center w-full mt-10 text-[#5B6170]">
       {loading ? (
         <div className="flex mt-4 justify-center h-full w-full">
           <div>
@@ -41,7 +41,7 @@ const Home = () => {
           {posts.map((post) => (
             <Link
               to={`/posts/${post.slug}`}
-              className="relative flex justify-center w-full mb-4 group"
+              className="relative z-0 flex justify-center w-full mb-4 group"
               key={post.slug}
             >
               <div className="flex flex-col gap-1 w-full max-w-[450px] lg:max-w-[96%]">
@@ -57,7 +57,7 @@ const Home = () => {
                   )}
                 </div>
                 <div className="flex flex-col gap-3 px-0.5">
-                  <div className="text-lg w-full">{post.title}</div>
+                  <div className="text-lg w-full text-black">{post.title}</div>
                   <div className="flex text-[#3D404B] gap-2">
                     <span>{post.duration} min read</span> •
                     <span>{formatTime(post.updatedAt)}</span>

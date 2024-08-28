@@ -23,6 +23,20 @@ export const getPost = async (req, res) => {
     }
 };
 
+export const getUserPost = async (req, res) => {
+    console.log("here")
+    // const { username } = req.params;
+    const userId = req.userId
+    try {
+        const post = await Post.find({ author: userId })
+            .populate('author', 'name');
+        if (!post) return res.status(404).json({ message: 'Post not found' });
+        res.json(post);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const createPost = async (req, res) => {
     const { title, sections, excerpt, featuredImage, duration, tags } = req.body;
 
@@ -55,6 +69,7 @@ export const createPost = async (req, res) => {
         const newPost = await post.save();
         res.status(201).json(newPost);
     } catch (error) {
+        console.log("error creating post", error)
         res.status(400).json({ message: error.message });
     }
 };

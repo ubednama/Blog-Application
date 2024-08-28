@@ -12,14 +12,14 @@ const Header = () => {
 
   return (
     <header className="text-Black p-4 flex justify-between items-center border-t-4 border-[#6947BF] sticky top-0 z-50 bg-white">
-      <div className="text-2xl font-bold">
+      <div className="text-2xl font-bold text-black">
         <Link to="/">ZuAI</Link>
       </div>
       <div className="space-x-4">
         {isAuthenticated ? (
           <button
             onClick={handleLogout}
-            className="hover:underline bg-[#EAF0F2] border-2 rounded-full py-2 px-4"
+            className="hover:underline bg-[#5B6170] border-2  text-[#EAF0F2] rounded-full py-2 px-4"
           >
             Logout
           </button>
@@ -27,7 +27,7 @@ const Header = () => {
           <>
             <Link
               to="/login"
-              className="hover:underline bg-[#EAF0F2] border-2 rounded-full py-2 px-4"
+              className="hover:underline bg-[#EAF0F2] text-[#5B6170] border-2 rounded-full py-2 px-4"
             >
               Login
             </Link>
